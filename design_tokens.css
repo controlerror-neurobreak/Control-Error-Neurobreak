@@ -1,0 +1,22 @@
+:root {
+    /* Quantum Night Palette */
+    --bg-deep: #050508;
+    --bg-neural: #0a0a12;
+    --accent-cyan: #00f2ff;
+    --accent-purple: #9d00ff;
+    --accent-pink: #ff00c8;
+
+    /* Gradients */
+    --grad-neural: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%);
+    --grad-cyan: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+    --grad-purple: linear-gradient(135deg, #9d00ff 0%, #6e00ff 100%);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(15, 15, 25, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+
+    /* Typography */
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+}

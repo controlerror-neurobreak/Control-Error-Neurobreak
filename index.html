@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Error: Neurobreak</title>
+    <meta name="description"
+        content="Navigate through 20 challenging levels by solving puzzles and managing resources in this terminal-based puzzle game.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Authentication Modal -->
+    <div class="username-menu" id="username-overlay">
+        <div class="username-content">
+            <h2 id="auth-title">Create Account</h2>
+            <p id="auth-subtitle" style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">Save
+                your progress and compete on leaderboards</p>
+
+            <input type="text" id="username-input" placeholder="Choose a username..." maxlength="15">
+            <input type="email" id="email-input" placeholder="Enter your email...">
+            <div class="password-container">
+                <input type="password" id="password-input" placeholder="Create a password...">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
+
+            <p id="forgot-pass-link" style="display: none;">Forgot password?</p>
+
+            <p id="username-error"
+                style="color: var(--accent-danger); font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>
+
+            <button id="username-submit">Continue</button>
+
+            <p style="color: var(--text-tertiary); font-size: 0.85rem; margin-top: 20px;">
+                <span id="auth-toggle-text">Already have an account?</span>
+                <a href="#" id="auth-toggle-link">Sign in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <button id="profile-toggle" class="profile-btn">
+        <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+        <span>Profile</span>
+    </button>
+
+
+
+    <i data-lucide="settings" class="icon" id="settings-icon"></i>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="profile-overlay">
+        <div class="profile-content">
+            <span class="close-profile">&times;</span>
+            <h2>Profile</h2>
+            <div class="profile-info">
+                <p>Signed in as <span id="profile-username"></span></p>
+            </div>
+
+            <h3>Change Password</h3>
+            <div class="password-container">
+                <input type="password" id="old-pass" placeholder="Current password">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
+            <div class="password-container">
+                <input type="password" id="new-pass" placeholder="New password">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
+            <p id="profile-forgot-pass">Forgot password?</p>
+            <button id="change-pass-btn">Update Password</button>
+            <p id="profile-msg" style="font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>
+
+            <div class="account-actions">
+                <button id="logout-btn">Sign Out</button>
+                <button id="delete-account-btn">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recovery Modal -->
+    <div id="recovery-modal" class="profile-overlay">
+        <div class="profile-content">
+            <span class="close-recovery close-profile">&times;</span>
+            <h2>Account Recovery</h2>
+            <div id="rec-step-1">
+                <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">Enter your username to
+                    receive a password reset link.</p>
+                <input type="text" id="rec-username-input" placeholder="Enter username">
+                <button id="rec-search-send-btn">Send Reset Link</button>
+            </div>
+            <p id="rec-msg" style="margin-top: 12px; font-size: 0.85rem; min-height: 1.2rem;"></p>
+        </div>
+    </div>
+
+    <!-- Password Reset Modal -->
+    <div id="password-reset-modal" class="profile-overlay" style="display:none;">
+        <div class="profile-content">
+            <h2 style="color: var(--accent-success);">Reset Password</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">Enter your new password
+                below.</p>
+            <div class="password-container">
+                <input type="password" id="reset-new-pass" placeholder="New password (min 6 characters)">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
+            <div class="password-container">
+                <input type="password" id="reset-confirm-pass" placeholder="Confirm new password">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
+            <p id="reset-msg"
+                style="color: var(--accent-danger); font-size: 0.85rem; margin: 8px 0; min-height: 1.2rem;"></p>
+            <button id="reset-password-confirm-btn">Set New Password</button>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div class="settings">
+        <i data-lucide="x" class="icon" id="close-settings-icon"></i>
+
+        <h3
+            style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 16px;">
+            Settings</h3>
+
+        <!-- <div class="settings-item">
+            <span class="settings-title">Appearance</span>
+            <button id="theme-btn" class="theme-btn">
+                <span class="theme-text">Dark Mode</span>
+            </button>
+        </div> -->
+
+        <div class="settings-item">
+            <span class="settings-title">Draggable Terminal</span>
+            <label class="switch">
+                <input type="checkbox" id="dragSetting">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="settings-item">
+            <span class="settings-title">Sound Effects</span>
+            <label class="switch">
+                <input type="checkbox" id="soundSetting" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="settings-item">
+            <span class="settings-title">Subject Preferences</span>
+            <button id="open-subject-pref-btn"
+                style="background: none; border: 1px solid var(--border-primary); color: var(--text-primary); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.8rem; cursor: pointer;">
+                Configure
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="bg-gradient">
+        <main class="container">
+            <header class="heading">
+                <h1>Control Error: Neurobreak</h1>
+                <p class="tagline">A terminal-based puzzle adventure</p>
+            </header>
+
+            <div class="main-btns-cont">
+                <div class="card play-card">
+                    <i data-lucide="play" class="icon"></i>
+                    <p class="btn-text">Play</p>
+                    <p class="sub-text">Start your journey</p>
+                </div>
+
+                <div class="card rules-card">
+                    <i data-lucide="book-open" class="icon"></i>
+                    <p class="btn-text">Rules</p>
+                    <p class="sub-text">Learn how to play</p>
+                </div>
+
+                <div class="card leaderboard-card" id="leaderboard-card">
+                    <i data-lucide="trophy" class="icon"></i>
+                    <p class="btn-text">Leaderboard</p>
+                    <p class="sub-text">Coming soon</p>
+                </div>
+            </div>
+
+            <div class="game-feature-cont">
+                <h2 class="game-feature-cont-heading">Game Features</h2>
+                <ul class="features-list">
+                    <li>20 unique levels with increasing difficulty</li>
+                    <li>Terminal-based puzzle solving</li>
+                    <li>Time management challenges</li>
+                    <li>Player vs AI competition</li>
+                    <li>Progressive skill system</li>
+                    <li>More levels coming soon</li>
+                </ul>
+            </div>
+        </main>
+
+        <!-- Rules Page -->
+        <div class="rules-page-cont">
+            <header class="header-rules">
+                <i data-lucide="book-open" class="icon-small"></i>
+                <h1>How to Play</h1>
+            </header>
+
+            <section class="rules-card-wide">
+                <h3>Objective</h3>
+                <p>Navigate through 20 challenging levels by solving puzzles and managing your resources. Complete each
+                    level before time runs out while maintaining your health to progress to the next challenge.</p>
+            </section>
+
+            <section class="rules-card-wide">
+                <h3>Gameplay</h3>
+                <ol class="rules-list">
+                    <li>Select a level from the level selection screen</li>
+                    <li>Use the main game canvas to interact with game elements</li>
+                    <li>You'll receive a protective shield for 5 seconds every 10 seconds</li>
+                    <li>Your controls will invert every 10 seconds</li>
+                    <li>Answer terminal questions correctly to restore normal controls</li>
+                    <li>Solve terminal puzzles to progress through levels</li>
+                    <li>Monitor your timer and health bar carefully</li>
+                </ol>
+            </section>
+
+            <div class="rules-footer-btns">
+                <button class="btn-purple" id="rules-to-levels">
+                    Start Playing
+                    <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+                </button>
+                <button class="btn-gray" id="rules-to-home">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Selection -->
+    <div class="play-levels">
+        <div class="back-btn-play-levels">
+            <i data-lucide="arrow-left" class="icon back-btn-play-levels-icon"></i>
+            <p class="btn-text back-btn-play-levels-text">Back</p>
+        </div>
+
+        <div class="play-levels-heading-cont">
+            <h1 class="play-levels-heading">Select Level</h1>
+        </div>
+
+        <div class="levels-cont">
+            <div class="lvl-1 lvls">1</div>
+            <div class="lvl-2 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-3 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-4 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-5 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-6 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-7 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-8 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-9 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-10 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-11 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-12 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-13 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-14 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-15 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-16 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-17 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-18 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-19 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+            <div class="lvl-20 lvls"><i data-lucide="lock" class="lock-icon"></i></div>
+        </div>
+    </div>
+
+    <!-- Game Interface -->
+    <div class="game-wrapper">
+        <div class="game-header">
+            <div class="header-left">
+                <i data-lucide="arrow-left" class="back-icon" id="game-to-levels"></i>
+                <p class="level-title"></p>
+            </div>
+
+            <div class="header-right">
+                <button id="pause-btn" class="icon-btn-glass"><i data-lucide="pause"></i></button>
+                <div class="stat"><i data-lucide="clock"></i> <span id="timer">05:00</span></div>
+                <div class="stat health-stat">
+                    <i data-lucide="heart"></i>
+                    <div class="health-bar">
+                        <div id="health-fill"></div>
+                    </div>
+                    <span id="health-percent">100%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-main">
+            <div class="canvas-section">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+
+            <div class="terminal-section">
+                <div class="terminal-header">
+                    <i data-lucide="terminal"></i>
+                    Terminal
+                </div>
+                <div id="terminal-content" class="terminal-content"></div>
+                <div class="terminal-input-row">
+                    <span>$</span>
+                    <input type="text" id="term-input" placeholder="Enter command..." autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logout-confirm-modal" class="profile-overlay" style="display:none;">
+        <div class="profile-content">
+            <h2>Sign Out</h2>
+            <p style="color: var(--text-secondary); margin: 20px 0;">Are you sure you want to sign out?</p>
+            <div class="account-actions">
+                <button id="cancel-logout">Cancel</button>
+                <button id="real-confirm-logout"
+                    style="background: var(--accent-warning); color: white; border: none;">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="delete-confirm-modal" class="profile-overlay purge-theme" style="display:none;">
+        <div class="profile-content critical-border">
+            <h2 class="purge-title">Delete Account</h2>
+            <div class="purge-warning">
+                <p><strong>Warning:</strong> This action cannot be undone.</p>
+                <p>All your data, progress, and scores will be permanently deleted.</p>
+            </div>
+
+            <div class="purge-sequence-box">
+                <p class="purge-instruction">Enter your password to confirm:</p>
+                <div class="password-container">
+                    <input type="password" id="delete-password-input" placeholder="Enter password">
+                    <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                </div>
+
+                <label class="purge-checkbox-cont">
+                    <input type="checkbox" id="purge-acknowledge">
+                    <span class="custom-check-box"></span>
+                    <span class="checkbox-text">I understand this action is permanent</span>
+                </label>
+
+                <p id="delete-error-msg" class="purge-error"></p>
+
+                <div id="purge-progress-cont" style="display: none;">
+                    <div class="purge-progress-label">Deleting account...</div>
+                    <div class="purge-progress-bar">
+                        <div id="purge-progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="purge-actions">
+                    <button id="final-delete-btn" class="btn-purge disabled" disabled>
+                        <i data-lucide="trash-2" class="purge-icon"></i>
+                        Delete My Account
+                    </button>
+                    <button id="cancel-delete" class="btn-abort">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="custom-alert-modal" class="profile-overlay" style="display:none;">
+        <div class="profile-content custom-alert-content">
+            <span class="close-alert">&times;</span>
+            <h2 id="custom-alert-title">Notification</h2>
+            <p id="custom-alert-message" style="color: var(--text-secondary); margin: 20px 0;"></p>
+            <button id="custom-alert-ok">OK</button>
+        </div>
+    </div>
+
+    <!-- Subject Preference Modal -->
+    <div id="subject-preference-modal" class="profile-overlay" style="display:none;">
+        <div class="profile-content" style="max-width: 400px;">
+            <h2>Select Subjects</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Choose the topics you want to practice.</p>
+
+            <form id="subject-pref-form">
+                <div class="subject-options-list">
+                    <label class="subject-checkbox-item">
+                        <input type="checkbox" name="subject" value="Mathematics">
+                        <span class="custom-checkbox"><i data-lucide="check" class="check-icon"></i></span>
+                        <div class="subject-info">
+                            <span class="subject-name">Mathematics</span>
+                            <span class="subject-desc">Algebra, Calculus & Logic</span>
+                        </div>
+                    </label>
+                    <label class="subject-checkbox-item">
+                        <input type="checkbox" name="subject" value="Science">
+                        <span class="custom-checkbox"><i data-lucide="check" class="check-icon"></i></span>
+                        <div class="subject-info">
+                            <span class="subject-name">Science</span>
+                            <span class="subject-desc">Physics, Chemistry & Biology</span>
+                        </div>
+                    </label>
+                    <label class="subject-checkbox-item">
+                        <input type="checkbox" name="subject" value="Computer">
+                        <span class="custom-checkbox"><i data-lucide="check" class="check-icon"></i></span>
+                        <div class="subject-info">
+                            <span class="subject-name">Computer Science</span>
+                            <span class="subject-desc">Programming & Networks</span>
+                        </div>
+                    </label>
+                </div>
+                <p id="subject-error-msg"
+                    style="color: var(--accent-danger); min-height: 1.2rem; margin: 12px 0; font-size: 0.85rem; text-align: center;">
+                </p>
+                <button type="submit" class="btn-purple" style="width: 100%; justify-content: center;">Save
+                    Preferences</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Age Verification Modal -->
+    <div id="age-modal" class="profile-overlay" style="display:none;">
+        <div class="profile-content" style="max-width: 360px;">
+            <h2>Age Verification</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">We use your age to
+                calibrate question difficulty.</p>
+
+            <input type="number" id="age-input" placeholder="Enter your age" min="5" max="100">
+
+            <p style="color: var(--text-tertiary); font-size: 0.8rem; margin: 16px 0;">
+                <i data-lucide="info"
+                    style="width: 12px; height: 12px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i>
+                This helps us generate age-appropriate questions
+            </p>
+
+            <p id="age-error-msg" style="color: var(--accent-danger); font-size: 0.85rem; min-height: 1.2rem;"></p>
+
+            <button id="save-age-btn" class="btn-purple" style="width: 100%; justify-content: center;">Continue</button>
+        </div>
+    </div>
+
+    <!-- Game State Modals -->
+    <div id="pause-modal" class="game-modal-overlay" style="display:none;">
+        <div class="game-modal-content">
+            <button class="menu-btn restart-btn" id="pause-restart">Restart</button>
+            <button class="menu-btn resume-btn" id="pause-resume">Resume</button>
+            <button class="menu-btn home-btn" id="pause-home">Main Menu</button>
+        </div>
+    </div>
+
+    <div id="game-over-modal" class="game-modal-overlay" style="display:none;">
+        <div class="game-modal-content">
+            <h1 class="game-over-title">Game Over</h1>
+            <button class="menu-btn restart-btn" id="death-restart">Try Again</button>
+            <button class="menu-btn home-btn" id="death-home">Main Menu</button>
+        </div>
+    </div>
+
+    <div id="win-modal" class="game-modal-overlay" style="display:none;">
+        <div class="game-modal-content">
+            <h1 class="win-title">Level Complete!</h1>
+            <button class="menu-btn restart-btn" id="win-replay">Replay</button>
+            <button class="menu-btn next-btn" id="win-next">Next Level</button>
+            <button class="menu-btn home-btn" id="win-home">Main Menu</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

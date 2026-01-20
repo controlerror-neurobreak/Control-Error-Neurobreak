@@ -1855,3 +1855,16 @@ button:active {
         transform: translateX(10px);
     }
 }
+
+#email-input {
+    border: 1px solid #333;
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}

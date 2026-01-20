@@ -1054,7 +1054,8 @@ input:checked+.slider:before {
 #old-pass,
 #new-pass,
 #reset-new-pass,
-#reset-confirm-pass {
+#reset-confirm-pass,
+#email-input {
     width: 100%;
     padding: 16px 20px;
     margin: 15px 0;
@@ -1854,17 +1855,4 @@ button:active {
     40% {
         transform: translateX(10px);
     }
-}
-
-#email-input {
-    border: 1px solid #333;
-    height: 50px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: var(--font-body);
-    color: #fff;
-    background: rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
 }

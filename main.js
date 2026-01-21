@@ -1,5 +1,5 @@
 // --- API HELPER FUNCTION ---
-const API_BASE = window.location.origin.includes('localhost:3000') ? '/api' : 'https://control-error-neurobreak.onrender.comi';
+const API_BASE = window.location.origin.includes('localhost:3000') ? '/api' : 'https://control-error-neurobreak.onrender.com';
 
 async function apiCall(endpoint, method = 'GET', body = null) {
     const controller = new AbortController();

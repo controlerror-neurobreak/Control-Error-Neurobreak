@@ -24,6 +24,11 @@
     /* Typography */
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Outfit', sans-serif;
+
+    /* Semantic Colors */
+    --accent-warning: #f59e0b;
+    --accent-danger: #ef4444;
+    --accent-success: #10b981;
 }
 
 * {
@@ -1209,24 +1214,72 @@ button:active {
 
 .account-actions button {
     width: 48%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-weight: 600;
 }
 
-#logout-btn {
-    background: #1f1f22;
-    color: #fff;
-    border: 1px solid var(--border-subtle);
-    transition: all 0.3s ease;
+#cancel-logout {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-dim);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#logout-btn:hover {
-    background: #2d2d30;
-    border-color: #fff;
+#cancel-logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-pure);
+    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
 
+#real-confirm-logout {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(234, 88, 12, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#real-confirm-logout:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(234, 88, 12, 0.4);
+    filter: saturate(1.2) brightness(1.1);
+}
+
+#real-confirm-logout:active {
+    transform: translateY(0) scale(0.98);
+}
+
+#logout-btn {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-pure);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#logout-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
 #delete-account-btn {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+    color: var(--accent-danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#delete-account-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--accent-danger);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.15);
 }
 
 #forgot-pass-link,

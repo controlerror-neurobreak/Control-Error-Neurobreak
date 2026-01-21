@@ -687,7 +687,7 @@ usernameSubmit.addEventListener('click', async () => {
     }
 
     if (isLoginMode) {
-        const { data, error } = await apiCall('/login', 'POST', { email: emailVal, password: passVal });
+        const { data, error } = await apiCall('/api/login', 'POST', { email: emailVal, password: passVal });
         if (error) {
             usernameError.innerText = "Login failed: " + error.message;
         } else {

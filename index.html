@@ -78,8 +78,14 @@
             <p id="profile-msg" style="font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>
 
             <div class="account-actions">
-                <button id="logout-btn">Sign Out</button>
-                <button id="delete-account-btn">Delete Account</button>
+                <button id="logout-btn">
+                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                    Sign Out
+                </button>
+                <button id="delete-account-btn">
+                    <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                    Delete Account
+                </button>
             </div>
         </div>
     </div>
@@ -315,11 +321,17 @@
     <div id="logout-confirm-modal" class="profile-overlay" style="display:none;">
         <div class="profile-content">
             <h2>Sign Out</h2>
-            <p style="color: var(--text-secondary); margin: 20px 0;">Are you sure you want to sign out?</p>
+            <p style="color: var(--text-dim); margin: 20px 0; font-size: 0.95rem;">Are you sure you want to end your
+                current session?</p>
             <div class="account-actions">
-                <button id="cancel-logout">Cancel</button>
-                <button id="real-confirm-logout"
-                    style="background: var(--accent-warning); color: white; border: none;">Sign Out</button>
+                <button id="cancel-logout">
+                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                    Cancel
+                </button>
+                <button id="real-confirm-logout">
+                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+                    Sign Out
+                </button>
             </div>
         </div>
     </div>

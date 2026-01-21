@@ -3,7 +3,7 @@ const API_BASE = window.location.origin.includes('localhost:3000') ? '/api' : 'h
 
 async function apiCall(endpoint, method = 'GET', body = null) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
     try {
         const options = {

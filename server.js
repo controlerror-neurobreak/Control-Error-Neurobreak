@@ -57,7 +57,7 @@ app.post("/api/register", async (req, res) => {
     const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { display_name: username }, emailRedirectTo: 'http://localhost:3000/' }
+        options: { data: { display_name: username }, emailRedirectTo: 'control-error-neurobreak.vercel.app' }
     });
 
     if (error) return res.status(400).json({ error: error.message });
@@ -89,7 +89,7 @@ app.post("/api/forgot-password", async (req, res) => {
     if (findError || !userData) return res.status(404).json({ error: "Callsign not found" });
 
     const { error } = await supabase.auth.resetPasswordForEmail(userData.email, {
-        redirectTo: 'http://localhost:3000/'
+        redirectTo: 'control-error-neurobreak.vercel.app'
     });
     if (error) return res.status(400).json({ error: error.message });
 

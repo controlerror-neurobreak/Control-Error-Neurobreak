@@ -88,7 +88,7 @@ app.post("/api/forgot-password", async (req, res) => {
     if (findError || !userData) return res.status(404).json({ error: "Callsign not found" });
 
     const { error } = await supabase.auth.resetPasswordForEmail(userData.email, {
-        redirectTo: 'control-error-neurobreak.vercel.app'
+        redirectTo: 'https://control-error-neurobreak.vercel.app'
     });
     if (error) return res.status(400).json({ error: error.message });
 

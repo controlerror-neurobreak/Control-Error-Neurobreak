@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static files from the root directory
-app.use(express.static(__dirname));
 
 // Supabase client (Admin)
 const supabase = createClient(
@@ -242,6 +241,8 @@ app.post("/api/generate-puzzle", async (req, res) => {
         });
     }
 });
+
+app.use(express.static(__dirname));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));

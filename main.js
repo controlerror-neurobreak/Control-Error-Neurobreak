@@ -470,7 +470,7 @@ async function updateGameSetting(settingKey, value) {
 
     // Save to server
     const metadata = { ...currentUser.user_metadata, [settingKey]: value };
-    const { data, error } = await apiCall('/update-user', 'POST', {
+    const { data, error } = await apiCall('/api/update-user', 'POST', {
         userId: currentUser.id,
         metadata: metadata
     });
@@ -626,7 +626,7 @@ async function checkSession() {
 
             // If we have token but no user, fetch user details
             if (session.access_token && !session.user) {
-                const { data, error } = await apiCall('/me', 'GET');
+                const { data, error } = await apiCall('/api/me', 'GET');
                 if (!error && data.user) {
                     session.user = data.user;
                     localStorage.setItem('pilot_session', JSON.stringify(session));
@@ -691,7 +691,7 @@ usernameSubmit.addEventListener('click', async () => {
     }
 
     if (isLoginMode) {
-        const { data, error } = await apiCall('/login', 'POST', { email: emailVal, password: passVal });
+        const { data, error } = await apiCall('/api/login', 'POST', { email: emailVal, password: passVal });
         if (error) {
             usernameError.innerText = "Login failed: " + error.message;
         } else {
@@ -701,7 +701,7 @@ usernameSubmit.addEventListener('click', async () => {
     } else {
         if (!userVal) { usernameError.innerText = "Callsign required!"; return; }
 
-        const { data, error } = await apiCall('/register', 'POST', {
+        const { data, error } = await apiCall('/api/register', 'POST', {
             email: emailVal,
             password: passVal,
             username: userVal
@@ -752,7 +752,7 @@ changePassBtn.addEventListener('click', async () => {
     profileMsg.style.color = "#3498db";
     profileMsg.innerText = "Updating...";
 
-    const { error } = await apiCall('/update-user', 'POST', {
+    const { error } = await apiCall('/api/update-user', 'POST', {
         userId: currentUser.id,
         password: newP
     });
@@ -856,7 +856,7 @@ finalDeleteBtn.addEventListener('click', async () => {
 
     async function executeFinalPurge() {
         errorMsg.innerText = 'EXECUTING FINAL PURGE...';
-        const { error } = await apiCall('/delete-account', 'POST', {
+        const { error } = await apiCall('/api/delete-account', 'POST', {
             userId: currentUser.id,
             password: password
         });
@@ -921,7 +921,7 @@ document.getElementById('rec-search-send-btn').addEventListener('click', async (
     recMsg.style.color = "#3498db";
     recMsg.innerText = "Searching neural records...";
 
-    const { data, error } = await apiCall('/forgot-password', 'POST', { callsign });
+    const { data, error } = await apiCall('/api/forgot-password', 'POST', { callsign });
 
     if (error) {
         recMsg.style.color = "#e74c3c";
@@ -1012,7 +1012,7 @@ subjectPrefForm.addEventListener('submit', async (e) => {
     submitBtn.innerText = "Saving...";
     submitBtn.disabled = true;
 
-    const { data, error } = await apiCall('/update-user', 'POST', {
+    const { data, error } = await apiCall('/api/update-user', 'POST', {
         userId: currentUser.id,
         metadata: { ...currentUser.user_metadata, subject_preferences: preferencesString }
     });
@@ -1116,7 +1116,7 @@ saveAgeBtn.addEventListener('click', async () => {
 
     if (currentUser) {
         saveAgeBtn.innerText = "SYNCING PROFILE...";
-        const { error } = await apiCall('/update-user', 'POST', {
+        const { error } = await apiCall('/api/update-user', 'POST', {
             userId: currentUser.id,
             metadata: { ...currentUser.user_metadata, age: age }
         });
@@ -1209,7 +1209,7 @@ async function fetchNewPuzzle() {
     const currentLvl = parseInt(lvlNo.innerText.replace('Level ', '')) || 1;
     const subjectsString = currentUser?.user_metadata?.subject_preferences || "General Science";
     const ageToSend = userAge || 18; // Default to 18 if missing
-    const { data, error } = await apiCall('/generate-puzzle', 'POST', { subjects: subjectsString, level: currentLvl, age: ageToSend });
+    const { data, error } = await apiCall('/api/generate-puzzle', 'POST', { subjects: subjectsString, level: currentLvl, age: ageToSend });
 
     // Use fallback if API fails
     currentPuzzle = data || {

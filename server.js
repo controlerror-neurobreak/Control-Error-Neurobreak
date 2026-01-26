@@ -47,10 +47,40 @@ app.get("/api/me", async (req, res) => {
     res.json({ user });
 });
 
+// --- CHECK USERNAME ---
+app.get("/api/check-username", async (req, res) => {
+    const { username } = req.query;
+    if (!username) return res.status(400).json({ error: "Username required" });
+
+    // Check in user_metadata of all users (admin client)
+    const { data: { users }, error } = await supabase.auth.admin.listUsers();
+
+    if (error) return res.status(400).json({ error: error.message });
+
+    const exists = users.some(u =>
+        u.user_metadata &&
+        u.user_metadata.display_name &&
+        u.user_metadata.display_name.toLowerCase() === username.toLowerCase()
+    );
+
+    res.json({ exists });
+});
+
 // --- REGISTER ---
 app.post("/api/register", async (req, res) => {
     const { email, password, username } = req.body;
     if (!email || !password || !username) return res.status(400).json({ error: "Missing fields" });
+
+    // Double check username uniqueness on server side
+    const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
+    if (!listError) {
+        const exists = users.some(u =>
+            u.user_metadata &&
+            u.user_metadata.display_name &&
+            u.user_metadata.display_name.toLowerCase() === username.toLowerCase()
+        );
+        if (exists) return res.status(400).json({ error: "Callsign already claimed by another pilot." });
+    }
 
     // For registration, we use the standard signUp so it sends confirmation email
     const { data, error } = await supabase.auth.signUp({

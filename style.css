@@ -20,6 +20,13 @@
     --text-dim: #94a3b8;
     --accent-teal: #2dd4bf;
     --accent-indigo: #818cf8;
+    --accent-purple: #a855f7;
+
+    /* Spacing & Sizing */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
 
     /* Typography */
     --font-heading: 'Inter', sans-serif;
@@ -29,6 +36,164 @@
     --accent-warning: #f59e0b;
     --accent-danger: #ef4444;
     --accent-success: #10b981;
+}
+
+/* Top Bar Actions & Layout */
+.top-bar-actions {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+}
+
+.profile-btn {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid var(--glass-edge);
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    color: var(--text-pure);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-indigo);
+    box-shadow: 0 8px 24px rgba(129, 140, 248, 0.2);
+}
+
+.icon-btn-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    padding: 10px;
+    border-radius: var(--radius-md);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn-glass:hover {
+    color: var(--text-pure);
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+/* Profile Modal Enhancements */
+.profile-section {
+    margin-bottom: 24px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-section h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    font-family: var(--font-heading);
+}
+
+.input-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.input-group label {
+    display: none;
+}
+
+.input-group input,
+.profile-select {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    color: var(--text-pure);
+    font-family: var(--font-body);
+}
+
+.btn-micro {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-indigo);
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-micro:hover {
+    filter: brightness(1.2);
+}
+
+.pref-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.btn-glass-v2 {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-soft);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-glass-v2:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-dim);
+    transform: translateY(-1px);
+}
+
+.btn-danger-outline {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    padding: 12px;
+    width: 100%;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-danger-outline:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
 }
 
 * {
@@ -772,12 +937,39 @@ body {
     animation: modalPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Animations */
+@keyframes modalPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.profile-overlay.show .profile-content {
+    animation: modalPopIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.profile-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px !important;
+}
+
 #age-modal h2 {
     font-size: 1.5rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     background: linear-gradient(90deg, #f1c40f, #f39c12);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
 }

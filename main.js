@@ -665,15 +665,18 @@ authToggleLink.addEventListener('click', (e) => {
     e.preventDefault();
     isLoginMode = !isLoginMode;
     usernameError.innerText = "";
+    const confirmPassCont = document.getElementById('confirm-password-container');
     if (isLoginMode) {
         authTitle.innerText = "PILOT LOGIN";
         usernameInput.style.display = "none";
+        confirmPassCont.style.display = "none";
         usernameSubmit.innerText = "Login & Start";
         authToggleLink.innerText = "Register here";
         forgotPassLink.style.display = "block";
     } else {
         authTitle.innerText = "PILOT REGISTRATION";
         usernameInput.style.display = "block";
+        confirmPassCont.style.display = "block";
         usernameSubmit.innerText = "Register & Start";
         authToggleLink.innerText = "Login here";
         forgotPassLink.style.display = "none";
@@ -684,6 +687,7 @@ usernameSubmit.addEventListener('click', async () => {
     const userVal = usernameInput.value.trim();
     const emailVal = emailInput.value.trim();
     const passVal = passwordInput.value.trim();
+    const confirmPassVal = document.getElementById('confirm-password-input').value.trim();
 
     if (!emailVal || passVal.length < 6) {
         usernameError.innerText = "Valid email & 6+ char password required.";
@@ -700,6 +704,17 @@ usernameSubmit.addEventListener('click', async () => {
         }
     } else {
         if (!userVal) { usernameError.innerText = "Callsign required!"; return; }
+        if (passVal !== confirmPassVal) {
+            usernameError.innerText = "Passwords do not match.";
+            return;
+        }
+
+        // Check username uniqueness
+        const { data: checkData, error: checkError } = await apiCall(`/api/check-username?username=${encodeURIComponent(userVal)}`, 'GET');
+        if (checkData && checkData.exists) {
+            usernameError.innerText = "This callsign is already claimed!";
+            return;
+        }
 
         const { data, error } = await apiCall('/api/register', 'POST', {
             email: emailVal,
@@ -735,6 +750,11 @@ function toggleProfile(forceClose = false) {
             setTimeout(() => usernameOverlay.classList.add('show'), 10);
             return;
         }
+
+        // Populate fields
+        document.getElementById('change-username-input').value = currentUser.user_metadata.display_name || "";
+        document.getElementById('age-group-dropdown').value = currentUser.user_metadata.age_group || "";
+
         profileOverlay.style.display = 'flex';
         setTimeout(() => { profileOverlay.classList.add('show'); }, 10);
     }
@@ -743,6 +763,72 @@ function toggleProfile(forceClose = false) {
 document.addEventListener('click', (e) => {
     if (e.target.closest('#profile-toggle')) toggleProfile();
     if (e.target.classList.contains('close-profile') || e.target.id === 'profile-modal') toggleProfile(true);
+    if (e.target.closest('#top-logout-btn')) {
+        logoutModal.style.display = 'flex';
+        setTimeout(() => logoutModal.classList.add('show'), 10);
+    }
+});
+
+// Profile Modal Inner Actions
+document.getElementById('update-username-btn').addEventListener('click', async () => {
+    const newUsername = document.getElementById('change-username-input').value.trim();
+    if (!newUsername || newUsername === currentUser.user_metadata.display_name) return;
+
+    profileMsg.style.color = "var(--accent-indigo)";
+    profileMsg.innerText = "Checking availability...";
+
+    const { data: checkData } = await apiCall(`/api/check-username?username=${encodeURIComponent(newUsername)}`, 'GET');
+    if (checkData && checkData.exists) {
+        profileMsg.style.color = "var(--accent-danger)";
+        profileMsg.innerText = "Callsign unavailable.";
+        return;
+    }
+
+    const { data, error } = await apiCall('/api/update-user', 'POST', {
+        userId: currentUser.id,
+        metadata: { ...currentUser.user_metadata, display_name: newUsername }
+    });
+
+    if (!error) {
+        currentUser = data.user;
+        document.getElementById('profile-username').innerText = newUsername;
+        profileMsg.style.color = "var(--accent-success)";
+        profileMsg.innerText = "Callsign updated!";
+
+        // Update session
+        const session = JSON.parse(localStorage.getItem('pilot_session'));
+        session.user = currentUser;
+        localStorage.setItem('pilot_session', JSON.stringify(session));
+    }
+});
+
+document.getElementById('age-group-dropdown').addEventListener('change', async (e) => {
+    const ageGroup = e.target.value;
+    if (!ageGroup) return;
+
+    const { data, error } = await apiCall('/api/update-user', 'POST', {
+        userId: currentUser.id,
+        metadata: { ...currentUser.user_metadata, age_group: ageGroup, age: parseInt(ageGroup.split('-')[1]) || 20 }
+    });
+
+    if (!error) {
+        currentUser = data.user;
+        userAge = currentUser.user_metadata.age;
+        profileMsg.style.color = "var(--accent-success)";
+        profileMsg.innerText = "Age group updated!";
+
+        const session = JSON.parse(localStorage.getItem('pilot_session'));
+        session.user = currentUser;
+        localStorage.setItem('pilot_session', JSON.stringify(session));
+    }
+});
+
+document.getElementById('profile-subject-btn').addEventListener('click', () => {
+    showSubjectPrefModal();
+});
+
+document.getElementById('profile-settings-btn').addEventListener('click', () => {
+    settingsCont.classList.add('active');
 });
 
 changePassBtn.addEventListener('click', async () => {
@@ -1092,9 +1178,9 @@ function showAgeModal() {
 }
 
 saveAgeBtn.addEventListener('click', async () => {
-    const age = parseInt(ageInput.value);
-    if (!age || age < 5 || age > 100) {
-        ageErrorMsg.innerText = "Please enter a valid age (5-100).";
+    const ageGroup = document.getElementById('age-group-dropdown-init').value;
+    if (!ageGroup) {
+        ageErrorMsg.innerText = "Please select an age group.";
         return;
     }
 
@@ -1111,14 +1197,14 @@ saveAgeBtn.addEventListener('click', async () => {
     saveAgeBtn.innerText = "OPTIMIZING SUBJECTS...";
     await new Promise(r => setTimeout(r, 600));
 
-    userAge = age; // Update global state
-    localStorage.setItem('pilot_age', age); // Always save locally as backup/guest
+    userAge = parseInt(ageGroup.split('-')[1]) || 20;
+    localStorage.setItem('pilot_age_group', ageGroup);
 
     if (currentUser) {
         saveAgeBtn.innerText = "SYNCING PROFILE...";
         const { error } = await apiCall('/api/update-user', 'POST', {
             userId: currentUser.id,
-            metadata: { ...currentUser.user_metadata, age: age }
+            metadata: { ...currentUser.user_metadata, age_group: ageGroup, age: userAge }
         });
 
         if (error) {

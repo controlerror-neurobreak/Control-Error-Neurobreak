@@ -30,6 +30,10 @@
                 <input type="password" id="password-input" placeholder="Create a password...">
                 <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
             </div>
+            <div class="password-container" id="confirm-password-container">
+                <input type="password" id="confirm-password-input" placeholder="Confirm your password...">
+                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            </div>
 
             <p id="forgot-pass-link" style="display: none;">Forgot password?</p>
 
@@ -45,15 +49,15 @@
         </div>
     </div>
 
-    <!-- Top Bar -->
-    <button id="profile-toggle" class="profile-btn">
-        <i data-lucide="user" style="width: 16px; height: 16px;"></i>
-        <span>Profile</span>
-    </button>
-
-
-
-    <i data-lucide="settings" class="icon" id="settings-icon"></i>
+    <div class="top-bar-actions">
+        <button id="profile-toggle" class="profile-btn">
+            <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+            <span>Profile</span>
+        </button>
+        <button id="top-logout-btn" class="icon-btn-glass" title="Sign Out">
+            <i data-lucide="log-out"></i>
+        </button>
+    </div>
 
     <!-- Profile Modal -->
     <div id="profile-modal" class="profile-overlay">
@@ -64,28 +68,64 @@
                 <p>Signed in as <span id="profile-username"></span></p>
             </div>
 
-            <h3>Change Password</h3>
-            <div class="password-container">
-                <input type="password" id="old-pass" placeholder="Current password">
-                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
-            </div>
-            <div class="password-container">
-                <input type="password" id="new-pass" placeholder="New password">
-                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
-            </div>
-            <p id="profile-forgot-pass">Forgot password?</p>
-            <button id="change-pass-btn">Update Password</button>
-            <p id="profile-msg" style="font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>
+            <div id="profile-main-view">
+                <div class="profile-section">
+                    <h3>Account Info</h3>
+                    <div class="input-group">
+                        <label>Callsign</label>
+                        <input type="text" id="change-username-input" placeholder="Your username">
+                        <button id="update-username-btn" class="btn-micro">Update</button>
+                    </div>
+                </div>
 
-            <div class="account-actions">
-                <button id="logout-btn">
-                    <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
-                    Sign Out
-                </button>
-                <button id="delete-account-btn">
-                    <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
-                    Delete Account
-                </button>
+                <div class="profile-section">
+                    <h3>Age Group</h3>
+                    <select id="age-group-dropdown" class="profile-select">
+                        <option value="">Select Age Group</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="11-15">11-15 years</option>
+                        <option value="16-25">16-25 years</option>
+                        <option value="26-40">26-40 years</option>
+                        <option value="41+">41+ years</option>
+                    </select>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Preferences</h3>
+                    <div class="pref-actions">
+                        <button id="profile-subject-btn" class="btn-glass-v2">
+                            <i data-lucide="book" style="width: 14px;"></i>
+                            Configure Subjects
+                        </button>
+                        <button id="profile-settings-btn" class="btn-glass-v2">
+                            <i data-lucide="settings" style="width: 14px;"></i>
+                            System Settings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Security</h3>
+                    <div class="password-container">
+                        <input type="password" id="old-pass" placeholder="Current password">
+                        <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="new-pass" placeholder="New password">
+                        <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                    </div>
+                    <p id="profile-forgot-pass">Forgot password?</p>
+                    <button id="change-pass-btn">Update Password</button>
+                </div>
+
+                <p id="profile-msg" style="font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>
+
+                <div class="account-actions">
+                    <button id="delete-account-btn" class="btn-danger-outline">
+                        <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+                        Purge Account
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -156,13 +196,9 @@
             </label>
         </div>
 
-        <div class="settings-item">
-            <span class="settings-title">Subject Preferences</span>
-            <button id="open-subject-pref-btn"
-                style="background: none; border: 1px solid var(--border-primary); color: var(--text-primary); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.8rem; cursor: pointer;">
-                Configure
-            </button>
-        </div>
+        <!-- Settings moved to profile modal toggle -->
+        <p style="color: var(--text-dim); font-size: 0.8rem; margin-top: 20px;">Use the profile menu to configure
+            additional preferences.</p>
     </div>
 
     <!-- Main Content -->
@@ -437,13 +473,14 @@
             <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9rem;">We use your age to
                 calibrate question difficulty.</p>
 
-            <input type="number" id="age-input" placeholder="Enter your age" min="5" max="100">
-
-            <p style="color: var(--text-tertiary); font-size: 0.8rem; margin: 16px 0;">
-                <i data-lucide="info"
-                    style="width: 12px; height: 12px; display: inline-block; vertical-align: middle; margin-right: 4px;"></i>
-                This helps us generate age-appropriate questions
-            </p>
+            <select id="age-group-dropdown-init" class="profile-select" style="margin-bottom: 20px;">
+                <option value="">Select Age Group</option>
+                <option value="5-10">5-10 years</option>
+                <option value="11-15">11-15 years</option>
+                <option value="16-25">16-25 years</option>
+                <option value="26-40">26-40 years</option>
+                <option value="41+">41+ years</option>
+            </select>
 
             <p id="age-error-msg" style="color: var(--accent-danger); font-size: 0.85rem; min-height: 1.2rem;"></p>
 

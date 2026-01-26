@@ -47,6 +47,19 @@
     align-items: center;
     gap: 16px;
     z-index: 100;
+    animation: topBarSlide 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes topBarSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .profile-btn {
@@ -118,19 +131,43 @@
     align-items: center;
 }
 
-.input-group label {
-    display: none;
-}
-
 .input-group input,
 .profile-select {
     flex: 1;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--glass-border);
-    padding: 10px 16px;
-    border-radius: var(--radius-sm);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
     color: var(--text-pure);
     font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.input-group input:focus,
+.profile-select:focus {
+    outline: none;
+    border-color: var(--accent-indigo);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+}
+
+.profile-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 45px !important;
+}
+
+.profile-select option {
+    background: #1e1b4b;
+    color: white;
+    padding: 10px;
 }
 
 .btn-micro {
@@ -294,7 +331,7 @@ body {
     border-left: 1px solid var(--glass-edge);
     border-radius: 24px;
     padding: 50px 30px;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     position: relative;
     overflow: hidden;
     box-shadow: var(--glass-shadow);
@@ -304,27 +341,19 @@ body {
     cursor: pointer;
 }
 
-.card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-    pointer-events: none;
-}
-
 .card:hover {
-    transform: translateY(-12px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.05);
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
 .play-card:hover {
-    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(45, 212, 191, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(45, 212, 191, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
     border-color: var(--accent-teal);
 }
 
 .rules-card:hover {
-    box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(129, 140, 248, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(129, 140, 248, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
     border-color: var(--accent-indigo);
 }
 
@@ -343,8 +372,23 @@ body {
     transition: transform 0.3s ease;
 }
 
+.card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 40%, rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.4s;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
 .card:hover .icon {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
 }
 
 .btn-text {
@@ -600,10 +644,11 @@ body {
 }
 
 .lvls:not(.locked):hover {
-    transform: translateY(-5px) scale(1.05);
-    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px) scale(1.08);
+    border-color: var(--accent-indigo);
     color: #fff;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 35px -5px rgba(129, 140, 248, 0.3);
+    z-index: 10;
 }
 
 .lvls.locked {
@@ -826,7 +871,35 @@ body {
     padding: 25px;
     position: relative;
     box-shadow: var(--glass-shadow);
-    transition: width 0.3s ease, height 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.terminal-section.shake {
+    animation: terminalShake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes terminalShake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-6px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(6px, 0, 0);
+    }
 }
 
 .terminal-section.drag-enabled {
@@ -941,27 +1014,23 @@ body {
 @keyframes modalPopIn {
     0% {
         opacity: 0;
-        transform: scale(0.95) translateY(10px);
+        transform: scale(0.92) translateY(20px);
+        filter: blur(10px);
     }
 
     100% {
         opacity: 1;
         transform: scale(1) translateY(0);
+        filter: blur(0);
     }
 }
 
-.profile-overlay.show .profile-content {
-    animation: modalPopIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+.profile-overlay.show .profile-content,
+.username-menu.show .username-content {
+    animation: modalPopIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.profile-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-    padding-right: 40px !important;
-}
+/* Removed redundant profile-select override */
 
 #age-modal h2 {
     font-size: 1.5rem;
@@ -1184,19 +1253,23 @@ input:checked+.slider:before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(12px);
+    background: rgba(2, 6, 23, 0.4);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     z-index: 9999;
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: all 0.4s;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .username-menu.show,
 .profile-overlay.show {
     display: flex;
     opacity: 1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(2, 6, 23, 0.7);
 }
 
 .username-content,
@@ -1246,25 +1319,34 @@ input:checked+.slider:before {
 #reset-confirm-pass,
 #email-input {
     width: 100%;
-    padding: 16px 20px;
-    margin: 15px 0;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 20px;
+    margin: 12px 0;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--glass-border);
     color: #fff;
-    border-radius: 16px;
+    border-radius: var(--radius-md);
     text-align: left;
     font-family: var(--font-body);
-    font-size: 1rem;
-    transition: all 0.3s;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #username-input:focus,
 .password-container input:focus,
-.modal-input:focus {
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.08);
+.modal-input:focus,
+#delete-password-input:focus,
+#rec-username-input:focus,
+#old-pass:focus,
+#new-pass:focus,
+#reset-new-pass:focus,
+#reset-confirm-pass:focus,
+#email-input:focus {
     outline: none;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-indigo);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(129, 140, 248, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
 }
 
 .password-container {

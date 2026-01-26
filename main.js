@@ -446,6 +446,13 @@ inputField.addEventListener('keydown', (e) => {
                     setTimeout(() => fetchNewPuzzle(), 10000); // Fetch next only on success
                 } else {
                     puzzleAttempts++;
+                    // Trigger terminal shake
+                    const termSection = document.querySelector('.terminal-section');
+                    termSection.classList.remove('shake');
+                    void termSection.offsetWidth; // Trigger reflow for animation restart
+                    termSection.classList.add('shake');
+                    setTimeout(() => termSection.classList.remove('shake'), 400);
+
                     if (puzzleAttempts >= 2) {
                         addMyText("❌ MAXIMUM ATTEMPTS EXCEEDED. SYSTEM CRITICAL.", 'terminal-error');
                         gameActive = false;
@@ -671,6 +678,7 @@ authToggleLink.addEventListener('click', (e) => {
         authTitle.innerText = "PILOT LOGIN";
         usernameInput.style.display = "none";
         confirmPassCont.style.display = "none";
+        passwordInput.placeholder = "Enter your password...";
         usernameSubmit.innerText = "Login & Start";
         authToggleLink.innerText = "Register here";
         forgotPassLink.style.display = "block";
@@ -678,6 +686,7 @@ authToggleLink.addEventListener('click', (e) => {
         authTitle.innerText = "PILOT REGISTRATION";
         usernameInput.style.display = "block";
         confirmPassCont.style.display = "block";
+        passwordInput.placeholder = "Create a password...";
         usernameSubmit.innerText = "Register & Start";
         authToggleLink.innerText = "Login here";
         forgotPassLink.style.display = "none";

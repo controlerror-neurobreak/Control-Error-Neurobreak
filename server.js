@@ -53,11 +53,11 @@ app.get("/api/check-username", async (req, res) => {
     if (!username) return res.status(400).json({ error: "Username required" });
 
     // Check in user_metadata of all users (admin client)
-    const { data: { users }, error } = await supabase.auth.admin.listUsers();
+    const { data: listData, error } = await supabase.auth.admin.listUsers();
 
-    if (error) return res.status(400).json({ error: error.message });
+    if (error || !listData) return res.status(400).json({ error: error ? error.message : "Failed to fetch users" });
 
-    const exists = users.some(u =>
+    const exists = listData.users.some(u =>
         u.user_metadata &&
         u.user_metadata.display_name &&
         u.user_metadata.display_name.toLowerCase() === username.toLowerCase()
@@ -72,9 +72,9 @@ app.post("/api/register", async (req, res) => {
     if (!email || !password || !username) return res.status(400).json({ error: "Missing fields" });
 
     // Double check username uniqueness on server side
-    const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
-    if (!listError) {
-        const exists = users.some(u =>
+    const { data: listData, error: listError } = await supabase.auth.admin.listUsers();
+    if (!listError && listData && listData.users) {
+        const exists = listData.users.some(u =>
             u.user_metadata &&
             u.user_metadata.display_name &&
             u.user_metadata.display_name.toLowerCase() === username.toLowerCase()

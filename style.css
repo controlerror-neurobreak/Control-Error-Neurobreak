@@ -1232,16 +1232,8 @@ input:checked+.slider:before {
     z-index: 99999;
 }
 
-.profile-overlay {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+/* Removed redundant definition */
 
-.profile-overlay.show {
-    display: flex;
-    opacity: 1;
-}
 
 #username-input,
 .password-container input,
@@ -1356,12 +1348,8 @@ button:active {
     border-color: var(--text-dim);
 }
 
-/* Profile Specifics */
+/* Profile Specifics (Updated for group) */
 .profile-btn {
-    position: fixed;
-    top: 40px;
-    left: 40px;
-    z-index: 100;
     background: var(--glass-bg);
     backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
@@ -1374,6 +1362,9 @@ button:active {
     font-size: 1rem;
     transition: all 0.3s;
     box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .profile-btn:hover {

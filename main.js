@@ -105,17 +105,17 @@ let backToHomeFromPlayLevelsBtn = document.querySelector(".back-btn-play-levels"
 let backToLevelsFromGame = document.querySelector("#game-to-levels");
 let lvlNo = document.querySelector(".level-title");
 let lvls = document.querySelectorAll(".lvls");
-let settingsBtn = document.querySelector("#settings-icon");
+let settingsBtn = document.querySelector("#profile-settings-btn");
 let settingsCont = document.querySelector(".settings");
 let closeSettingsBtn = document.querySelector("#close-settings-icon");
 let themeBtn = document.querySelector("#theme-btn");
 let themeText = themeBtn?.querySelector(".theme-text");
 
-const homeUIElements = [document.querySelector("#profile-toggle"), document.querySelector("#settings-icon")];
+const homeUIElements = [document.querySelector("#profile-toggle"), document.querySelector("#top-logout-btn")];
 
 // --- AGE VERIFICATION ELEMENTS ---
 const ageModal = document.getElementById('age-modal');
-const ageInput = document.getElementById('age-input');
+const ageGroupInit = document.getElementById('age-group-dropdown-init');
 const saveAgeBtn = document.getElementById('save-age-btn');
 const ageErrorMsg = document.getElementById('age-error-msg');
 let userAge = null;
@@ -359,8 +359,8 @@ lvls.forEach((lvl) => {
         document.querySelector(".game-wrapper").style.display = "flex";
         playLevelsCont.style.display = "none";
         lvlNo.innerHTML = `Level ${lvl.innerText.trim()}`;
-        settingsBtn.style.display = "none";
-        settingsCont.classList.remove("active");
+        if (settingsBtn) settingsBtn.style.display = "none";
+        if (settingsCont) settingsCont.classList.remove("active");
 
         lucide.createIcons();
 
@@ -587,7 +587,7 @@ let userSubjectPreferences = "";
 
 const subjectPrefModal = document.getElementById('subject-preference-modal');
 const subjectPrefForm = document.getElementById('subject-pref-form');
-const openSubjectPrefBtn = document.getElementById('open-subject-pref-btn');
+const openSubjectPrefBtn = document.getElementById('profile-subject-btn');
 const subjectErrorMsg = document.getElementById('subject-error-msg');
 
 // Persistent Session Check (Manual via localStorage + URL Hash handling)
@@ -665,6 +665,7 @@ authToggleLink.addEventListener('click', (e) => {
     e.preventDefault();
     isLoginMode = !isLoginMode;
     usernameError.innerText = "";
+    usernameError.style.color = "var(--accent-danger)";
     const confirmPassCont = document.getElementById('confirm-password-container');
     if (isLoginMode) {
         authTitle.innerText = "PILOT LOGIN";
@@ -823,13 +824,8 @@ document.getElementById('age-group-dropdown').addEventListener('change', async (
     }
 });
 
-document.getElementById('profile-subject-btn').addEventListener('click', () => {
-    showSubjectPrefModal();
-});
+// Preferences listeners moved to consolidated blocks below or handled via delegation
 
-document.getElementById('profile-settings-btn').addEventListener('click', () => {
-    settingsCont.classList.add('active');
-});
 
 changePassBtn.addEventListener('click', async () => {
     const newP = newPassInput.value.trim();
@@ -857,11 +853,8 @@ changePassBtn.addEventListener('click', async () => {
 // --- LOGOUT LOGIC (CUSTOM POP-UP) ---
 const logoutModal = document.getElementById('logout-confirm-modal');
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-    toggleProfile(true); // Close the profile menu first
-    logoutModal.style.display = 'flex';
-    setTimeout(() => logoutModal.classList.add('show'), 10);
-});
+// Logout logic handled by delegated listener at line 763
+
 
 document.getElementById('cancel-logout').addEventListener('click', () => {
     logoutModal.classList.remove('show');

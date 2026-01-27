@@ -24,15 +24,27 @@
             <p id="auth-subtitle" style="color: var(--text-secondary); margin-bottom: 24px; font-size: 0.9rem;">Save
                 your progress and compete on leaderboards</p>
 
-            <input type="text" id="username-input" placeholder="Choose a username..." maxlength="15">
-            <input type="email" id="email-input" placeholder="Enter your email...">
-            <div class="password-container">
-                <input type="password" id="password-input" placeholder="Create a password...">
-                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            <div class="input-group-premium">
+                <label>Callsign</label>
+                <input type="text" id="username-input" placeholder="Neural identification name..." maxlength="15">
             </div>
-            <div class="password-container" id="confirm-password-container">
-                <input type="password" id="confirm-password-input" placeholder="Confirm your password...">
-                <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+            <div class="input-group-premium">
+                <label>Email Address</label>
+                <input type="email" id="email-input" placeholder="Enter your link address...">
+            </div>
+            <div class="input-group-premium">
+                <label>Neural Key</label>
+                <div class="password-container">
+                    <input type="password" id="password-input" placeholder="Create a secure key...">
+                    <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                </div>
+            </div>
+            <div class="input-group-premium" id="confirm-password-container">
+                <label>Confirm Key</label>
+                <div class="password-container">
+                    <input type="password" id="confirm-password-input" placeholder="Repeat your neural key...">
+                    <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                </div>
             </div>
 
             <p id="forgot-pass-link" style="display: none;">Forgot password?</p>
@@ -70,11 +82,13 @@
 
             <div id="profile-main-view">
                 <div class="profile-section">
-                    <h3>Account Info</h3>
-                    <div class="input-group">
-                        <label>Callsign</label>
-                        <input type="text" id="change-username-input" placeholder="Your username">
-                        <button id="update-username-btn" class="btn-micro">Update</button>
+                    <h3>Account Identity</h3>
+                    <div class="input-group-premium">
+                        <label>Pilot Callsign</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="change-username-input" placeholder="Your username">
+                            <button id="update-username-btn" class="btn-micro">Update</button>
+                        </div>
                     </div>
                 </div>
 
@@ -105,17 +119,23 @@
                 </div>
 
                 <div class="profile-section">
-                    <h3>Security</h3>
-                    <div class="password-container">
-                        <input type="password" id="old-pass" placeholder="Current password">
-                        <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                    <h3>Security Layers</h3>
+                    <div class="input-group-premium">
+                        <label>Current Key</label>
+                        <div class="password-container">
+                            <input type="password" id="old-pass" placeholder="Current password">
+                            <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                        </div>
                     </div>
-                    <div class="password-container">
-                        <input type="password" id="new-pass" placeholder="New password">
-                        <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                    <div class="input-group-premium">
+                        <label>New Neural Key</label>
+                        <div class="password-container">
+                            <input type="password" id="new-pass" placeholder="New password">
+                            <span class="toggle-password"><i data-lucide="eye" class="eye-icon"></i></span>
+                        </div>
                     </div>
-                    <p id="profile-forgot-pass">Forgot password?</p>
-                    <button id="change-pass-btn">Update Password</button>
+                    <p id="profile-forgot-pass" style="margin-bottom: 12px;">Forgotten access credentials?</p>
+                    <button id="change-pass-btn" style="width: 100%;">Install New Key</button>
                 </div>
 
                 <p id="profile-msg" style="font-size: 0.85rem; margin-top: 8px; min-height: 1.2rem;"></p>

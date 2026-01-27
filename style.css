@@ -128,14 +128,16 @@
 .input-group-premium {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-bottom: 12px;
+    gap: 2px;
+    margin-bottom: 10px;
 }
 
 .input-group-premium label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-dim);
-    padding-left: 4px;
+    padding-left: 2px;
+    margin-top: 4px;
+    line-height: 1.2;
 }
 
 .input-group-premium input,
@@ -1318,9 +1320,9 @@ input:checked+.slider:before {
 .profile-content h2 {
     font-family: var(--font-heading);
     color: var(--text-pure);
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     letter-spacing: -0.03em;
 }
 

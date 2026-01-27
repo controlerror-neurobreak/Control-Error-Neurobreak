@@ -2159,6 +2159,7 @@ button:active {
     animation: shake 0.4s ease-in-out;
 }
 
+/* 
 @keyframes shake {
 
     0%,
@@ -2173,4 +2174,4 @@ button:active {
     40% {
         transform: translateX(10px);
     }
-}
+} */

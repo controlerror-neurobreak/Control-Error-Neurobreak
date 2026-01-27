@@ -674,9 +674,11 @@ authToggleLink.addEventListener('click', (e) => {
     usernameError.innerText = "";
     usernameError.style.color = "var(--accent-danger)";
     const confirmPassCont = document.getElementById('confirm-password-container');
+    const usernameGroup = usernameInput.closest('.input-group-premium');
+
     if (isLoginMode) {
         authTitle.innerText = "PILOT LOGIN";
-        usernameInput.style.display = "none";
+        if (usernameGroup) usernameGroup.style.display = "none";
         confirmPassCont.style.display = "none";
         passwordInput.placeholder = "Enter your password...";
         usernameSubmit.innerText = "Login & Start";
@@ -684,8 +686,8 @@ authToggleLink.addEventListener('click', (e) => {
         forgotPassLink.style.display = "block";
     } else {
         authTitle.innerText = "PILOT REGISTRATION";
-        usernameInput.style.display = "block";
-        confirmPassCont.style.display = "block";
+        if (usernameGroup) usernameGroup.style.display = "flex";
+        confirmPassCont.style.display = "flex";
         passwordInput.placeholder = "Create a password...";
         usernameSubmit.innerText = "Register & Start";
         authToggleLink.innerText = "Login here";

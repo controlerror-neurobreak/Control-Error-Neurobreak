@@ -36,7 +36,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
 
         // Improve "Failed to fetch" message for clarity
         if (errorMsg.toLowerCase().includes('failed to fetch')) {
-            errorMsg = "Neural Link Failed: Could not connect to the backend server. Please ensure the server is running ('npm start').";
+            errorMsg = "Connection Failed: Could not connect to the backend server. Please ensure the server is running ('npm start').";
         }
 
         console.error(`API Error (${endpoint}):`, errorMsg);
@@ -790,7 +790,7 @@ document.getElementById('update-username-btn').addEventListener('click', async (
     const { data: checkData } = await apiCall(`/api/check-username?username=${encodeURIComponent(newUsername)}`, 'GET');
     if (checkData && checkData.exists) {
         profileMsg.style.color = "var(--accent-danger)";
-        profileMsg.innerText = "Callsign unavailable.";
+        profileMsg.innerText = "Username unavailable.";
         return;
     }
 
@@ -803,7 +803,7 @@ document.getElementById('update-username-btn').addEventListener('click', async (
         currentUser = data.user;
         document.getElementById('profile-username').innerText = newUsername;
         profileMsg.style.color = "var(--accent-success)";
-        profileMsg.innerText = "Callsign updated!";
+        profileMsg.innerText = "Username updated!";
 
         // Update session
         const session = JSON.parse(localStorage.getItem('pilot_session'));
@@ -951,7 +951,7 @@ finalDeleteBtn.addEventListener('click', async () => {
 
         if (error) {
             errorMsg.style.color = '#ff4d4d';
-            errorMsg.innerText = 'PURGE FAILED: ' + (error.message || "Server error");
+            errorMsg.innerText = 'DELETE FAILED: ' + (error.message || "Server error");
             modalContent.classList.add('shake-animation');
             setTimeout(() => modalContent.classList.remove('shake-animation'), 400);
 
@@ -963,7 +963,7 @@ finalDeleteBtn.addEventListener('click', async () => {
             if (purgeProgressCont) purgeProgressCont.style.display = 'none';
         } else {
             errorMsg.style.color = '#2ecc71';
-            errorMsg.innerText = 'NEURAL LINK SEVERED. GOODBYE, PILOT.';
+            errorMsg.innerText = 'Account deleted successfully. Goodbye.';
             setTimeout(() => {
                 localStorage.removeItem('pilot_session');
                 location.reload();
@@ -1004,10 +1004,10 @@ document.querySelector('.close-recovery').addEventListener('click', () => {
 
 document.getElementById('rec-search-send-btn').addEventListener('click', async () => {
     const callsign = recUsernameInput.value.trim();
-    if (!callsign) { recMsg.innerText = "Enter callsign."; return; }
+    if (!callsign) { recMsg.innerText = "Enter username."; return; }
 
     recMsg.style.color = "#3498db";
-    recMsg.innerText = "Searching neural records...";
+    recMsg.innerText = "Searching for account...";
 
     const { data, error } = await apiCall('/api/forgot-password', 'POST', { callsign });
 
@@ -1188,15 +1188,15 @@ saveAgeBtn.addEventListener('click', async () => {
 
     ageErrorMsg.innerText = "";
 
-    // Simulate Neural Calibration Sequence
+    // Simulate Loading Sequence
     const originalText = saveAgeBtn.innerText;
     saveAgeBtn.disabled = true;
-    saveAgeBtn.innerText = "ACCESSING NEURAL NET...";
+    saveAgeBtn.innerText = "Setting up...";
 
     await new Promise(r => setTimeout(r, 600));
-    saveAgeBtn.innerText = "CALIBRATING DIFFICULTY...";
+    saveAgeBtn.innerText = "Calibrating...";
     await new Promise(r => setTimeout(r, 600));
-    saveAgeBtn.innerText = "OPTIMIZING SUBJECTS...";
+    saveAgeBtn.innerText = "Finalizing...";
     await new Promise(r => setTimeout(r, 600));
 
     userAge = parseInt(ageGroup.split('-')[1]) || 20;

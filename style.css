@@ -128,8 +128,8 @@
 .input-group-premium {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 4px;
+    margin-bottom: 12px;
 }
 
 .input-group-premium label {
@@ -1342,8 +1342,8 @@ input:checked+.slider:before {
 #reset-confirm-pass,
 #email-input {
     width: 100%;
-    padding: 14px 20px;
-    margin: 12px 0;
+    padding: 12px 18px;
+    margin: 0;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--glass-border);
     color: #fff;

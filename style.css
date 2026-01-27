@@ -1312,8 +1312,21 @@ input:checked+.slider:before {
     overflow-y: auto;
     box-shadow: var(--glass-shadow);
     position: relative;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-teal) transparent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.username-content::-webkit-scrollbar,
+.profile-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.username-content,
+.profile-content {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .username-content h2,

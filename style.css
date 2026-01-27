@@ -51,10 +51,12 @@
 @keyframes fadeIn {
     0% {
         opacity: 0;
+        transform: scale(0.98);
     }
 
     100% {
         opacity: 1;
+        transform: scale(1);
     }
 }
 
@@ -1038,20 +1040,20 @@ body {
     background: rgba(10, 10, 20, 0.95);
     border: 1px solid rgba(45, 212, 191, 0.3);
     box-shadow: 0 0 30px rgba(45, 212, 191, 0.1);
-    animation: modalPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: modalPopIn 0.5s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Animations */
+/* Refined Modal Animation - Strictly centered scale only */
 @keyframes modalPopIn {
     0% {
         opacity: 0;
-        transform: scale(0.92) translateY(20px);
-        filter: blur(10px);
+        transform: scale(0.98);
+        filter: blur(4px);
     }
 
     100% {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: scale(1);
         filter: blur(0);
     }
 }
@@ -1120,17 +1122,7 @@ body {
     }
 }
 
-@keyframes modalPopIn {
-    0% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-}
+/* Redundant Keyframe Removed */
 
 /* --- RESPONSIVE ADJUSTMENTS --- */
 /* Settings Menu */

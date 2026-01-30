@@ -24,12 +24,12 @@
     --accent-warning: #f59e0b;
     --accent-danger: #ef4444;
 
-    /* Satin Glass Properties */
-    --glass-bg: rgba(15, 23, 42, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-edge: rgba(255, 255, 255, 0.12);
-    --glass-blur: 20px;
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+    /* Satin Glass Properties - Optimized for Performance */
+    --glass-bg: rgba(15, 23, 42, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-edge: rgba(255, 255, 255, 0.15);
+    --glass-blur: 8px;
+    --glass-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.5);
 
     /* Spacing & Borders */
     --radius-sm: 8px;

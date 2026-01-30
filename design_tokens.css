@@ -1,22 +1,48 @@
 :root {
-    /* Quantum Night Palette */
-    --bg-deep: #050508;
-    --bg-neural: #0a0a12;
-    --accent-cyan: #00f2ff;
-    --accent-purple: #9d00ff;
-    --accent-pink: #ff00c8;
+    /* Nebula Glass Palette - Premium Deep Space Hues */
+    --bg-deep: #020617;
+    --nebula-indigo: #0f172a;
+    --nebula-teal: #042f2e;
+    --nebula-rose: #451a1a;
+    --nebula-purple: #2e1065;
 
-    /* Gradients */
-    --grad-neural: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 100%);
-    --grad-cyan: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
-    --grad-purple: linear-gradient(135deg, #9d00ff 0%, #6e00ff 100%);
+    /* Text Colors */
+    --text-pure: #ffffff;
+    --text-soft: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-tertiary: #64748b;
 
-    /* Glassmorphism */
-    --glass-bg: rgba(15, 15, 25, 0.7);
+    /* Accents - Soft & Glowing */
+    --accent-cyan: #22d3ee;
+    --accent-indigo: #818cf8;
+    --accent-purple: #c084fc;
+    --accent-pink: #f472b6;
+    --accent-teal: #2dd4bf;
+
+    /* Status Colors */
+    --accent-success: #10b981;
+    --accent-warning: #f59e0b;
+    --accent-danger: #ef4444;
+
+    /* Satin Glass Properties */
+    --glass-bg: rgba(15, 23, 42, 0.75);
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    --glass-edge: rgba(255, 255, 255, 0.12);
+    --glass-blur: 20px;
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+
+    /* Spacing & Borders */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
 
     /* Typography */
-    --font-heading: 'Orbitron', sans-serif;
+    --font-heading: 'Outfit', 'Inter', sans-serif;
     --font-body: 'Outfit', sans-serif;
+    --font-mono: 'Fira Code', 'Courier New', monospace;
+
+    /* Animations */
+    --transition-fast: 200ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-slow: 500ms cubic-bezier(0.2, 0, 0, 1);
 }

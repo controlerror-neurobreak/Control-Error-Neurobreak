@@ -107,8 +107,13 @@ body {
 .input-group-premium {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    /* Explicitly align children to start (left) */
     gap: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    width: 100%;
+    text-align: left;
+    /* Ensure text alignment is forced left */
 }
 
 .input-group-premium label {
@@ -117,6 +122,8 @@ body {
     padding-left: 2px;
     margin-top: 4px;
     line-height: 1.2;
+    text-align: left;
+    width: 100%;
 }
 
 .input-group-premium input,
@@ -1320,6 +1327,8 @@ input:checked+.slider:before {
     box-shadow: var(--glass-shadow);
     position: relative;
     animation: modalPopIn 0.6s cubic-bezier(0.2, 0, 0, 1);
+    display: block;
+    /* Ensure it's not flex if we want text-align to work simply */
 }
 
 .username-content h2,
@@ -1329,21 +1338,19 @@ input:checked+.slider:before {
 .username-content p[style*="text-tertiary"],
 .profile-content .profile-info {
     text-align: center;
+    width: 100%;
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* Consolidated scrollbar and headers */
 .username-content::-webkit-scrollbar,
 .profile-content::-webkit-scrollbar {
     display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .username-content,
 .profile-content {
     -ms-overflow-style: none;
-    /* IE and Edge */
     scrollbar-width: none;
-    /* Firefox */
 }
 
 .username-content h2,

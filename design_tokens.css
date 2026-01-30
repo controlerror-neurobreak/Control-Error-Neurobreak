@@ -1,5 +1,5 @@
 :root {
-    /* Optimized Nebula Glass Palette */
+    /* Nebula Glass Palette - Premium Deep Space Hues */
     --bg-deep: #020617;
     --nebula-indigo: #0f172a;
     --nebula-teal: #042f2e;
@@ -12,7 +12,7 @@
     --text-dim: #94a3b8;
     --text-tertiary: #64748b;
 
-    /* Accents - GPU Friendly Hues */
+    /* Accents - Soft & Glowing */
     --accent-cyan: #22d3ee;
     --accent-indigo: #818cf8;
     --accent-purple: #c084fc;
@@ -24,14 +24,12 @@
     --accent-warning: #f59e0b;
     --accent-danger: #ef4444;
 
-    /* Optimized Satin Glass Properties */
-    --glass-bg: rgba(15, 23, 42, 0.85);
-    /* Increased opacity for less blur dependency */
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-edge: rgba(255, 255, 255, 0.15);
-    --glass-blur: 8px;
-    /* Optimized radius for mid-range GPUs */
-    --glass-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+    /* Satin Glass Properties */
+    --glass-bg: rgba(15, 23, 42, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-edge: rgba(255, 255, 255, 0.12);
+    --glass-blur: 20px;
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 
     /* Spacing & Borders */
     --radius-sm: 8px;
@@ -44,7 +42,7 @@
     --font-body: 'Outfit', sans-serif;
     --font-mono: 'Fira Code', 'Courier New', monospace;
 
-    /* Transition Performance (Avoid 'all') */
-    --transition-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
-    --transition-slow: 400ms cubic-bezier(0.2, 0, 0, 1);
+    /* Animations */
+    --transition-fast: 200ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-slow: 500ms cubic-bezier(0.2, 0, 0, 1);
 }
